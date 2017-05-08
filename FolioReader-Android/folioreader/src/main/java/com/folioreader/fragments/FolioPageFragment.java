@@ -71,7 +71,7 @@ public class FolioPageFragment extends Fragment {
     private static final String KEY_IS_SMIL_AVAILABLE = "com.folioreader.fragments.FolioPageFragment.IS_SMIL_AVAILABLE";
     private static final String KEY_HTML = "com.folioreader.fragments.FolioPageFragment.KEY_HTML";
     public static final String SP_FOLIO_PAGE_FRAGMENT = "com.folioreader.fragments.FolioPageFragment.SP_FOLIO_PAGE_FRAGMENT";
-    private static final String INJECT_HEAD_CLOUD_MATHJAX = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML-full\"></script>";
+    private static final String INJECT_HEAD_CLOUD_MATHJAX = "<script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML-full\"></script>";
 
     private static final int ACTION_ID_COPY = 1001;
     private static final int ACTION_ID_SHARE = 1002;
@@ -218,6 +218,8 @@ public class FolioPageFragment extends Fragment {
     private void initWebView(String htmlContent) {
 //        Log.e(TAG, "htmlContent:" + htmlContent);
         mWebview = (ObservableWebView) mRootView.findViewById(R.id.contentWebView);
+        // 开启硬件加速
+        mWebview.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         mWebview.setFragment(FolioPageFragment.this);
 
         mWebview.getViewTreeObserver().
@@ -604,6 +606,8 @@ public class FolioPageFragment extends Fragment {
         jsPath =
                 jsPath + String.format(getString(R.string.script_tag_method_call),
                         "setMediaOverlayStyleColors('#C0ED72','#C0ED72')");
+        jsPath =
+                jsPath + INJECT_HEAD_CLOUD_MATHJAX;
         String toInject = "\n" + cssPath + "\n" + jsPath + "\n</head>";
         htmlContent = htmlContent.replace("</head>", toInject);
 
@@ -661,6 +665,7 @@ public class FolioPageFragment extends Fragment {
                     "" + highlight.getContent() + "" + highlight.getContentPost();
             htmlContent = htmlContent.replaceFirst(searchStr, highlightStr);
         }
+//        Log.d(TAG, "htmlContent:" + htmlContent);
         return htmlContent;
     }
 
