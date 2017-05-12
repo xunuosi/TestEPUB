@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,7 +57,7 @@ public class ObservableWebView extends WebView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         mActivityCallback = (FolioActivity) getContext();
         mActivityCallback.hideToolBarIfVisible();
-        // Log.d("in ScrollChange","l"+l+"t"+t);
+//        Log.d("in ScrollChange","l:"+l+"t:"+t);
         if (mScrollListener != null) mScrollListener.onScrollChange(t);
         super.onScrollChanged(l, t, oldl, oldt);
     }

@@ -220,6 +220,14 @@ public class FolioPageFragment extends Fragment {
         mWebview = (ObservableWebView) mRootView.findViewById(R.id.contentWebView);
         // 开启硬件加速
         mWebview.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        // 屏蔽WebView本身的长按弹窗功能
+        mWebview.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
+
         mWebview.setFragment(FolioPageFragment.this);
 
         mWebview.getViewTreeObserver().
